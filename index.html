@@ -8,6 +8,7 @@
                 rätt: 0,
                 fel: 0,
                 slump: function (min, max) {
+                    max += 1;
                     return Math.floor(Math.random() * (max - min)) + min;
                 },    
                 nyttTal: function () {
@@ -44,7 +45,9 @@
                     } else  {
                         this.fel += 1;
                         $("#fel").text(this.fel);
-                        $("#resultat").text("Nej, " + this.tal.text() + " blir inte " + svarText() + ", försök igen noob." );
+                        var slump = this.slump(0, 1);
+                        var noobEllerLooser = slump == 1 ? "looser" : "noob";
+                        $("#resultat").text("Nej, " + this.tal.text() + " blir inte " + svarText() + ", försök igen " + noobEllerLooser + "." );
                     }
                 },
                 start: function () {
