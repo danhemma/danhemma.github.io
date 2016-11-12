@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
+        <script>
+            var app = {
+                tal: {},
+                rätt: 0,
+                fel: 0,
+                slump: function (min, max) {
+                    return Math.floor(Math.random() * (max - min)) + min;
+                },    
+                nyttTal: function () {
+                    var a = this.slump(6, 10);
+                    var b = this.slump(1, 10);
+                    return { 
+                        a, 
+                        b,
+                        resultat: function () { return a * b; },
+                        text: function () { return a + ' * ' + b; }
+                    }
+                },
+                visaNyttTal: function () {
+                    this.tal = this.nyttTal();
+                    $("#svar").val('');
+                    $("#resultat").text('');
+                    $("#talet").text('Vad blir ' + this.tal.text() + '?');
+                },
+                enter: function () {
+                    
+                    var svarText = function () {
+                        if ($("#svar").val() == '')
+                            return "ingenting";
+                        return $("#svar").val();
+                    }    
+                    
+                    var self = this;
+                    var svar = parseInt($("#svar").val());
+                    if (this.tal.resultat() == svar) {
+                        this.rätt += 1;
+                        $("#rätt").text(this.rätt)
+                        $("#resultat").text("Rätt!");
+                        window.setTimeout(function () { self.visaNyttTal(); }, 500);
+                    } else  {
+                        this.fel += 1;
+                        $("#fel").text(this.fel);
+                        $("#resultat").text("Nej, " + this.tal.text() + " blir inte " + svarText() + ", försök igen noob." );
+                    }
+                },
+                start: function () {
+                    var self = this;
+                    this.visaNyttTal();
+                    $("#svar").keyup(function(event){
+                        if(event.keyCode == 13){
+                            self.enter();
+                    }
+                    });
+                }        
+            }
+            
+            $(document).ready(function() { 
+                app.start();                
+                $("#svar").focus();
+            });
+            
+        </script>
+    </head>
+    <body>
+        <div style="text-align:center; margin-top:200px; font-size:300%">
+            <header>Hej</header>
+            <div>
+                <span id="talet"/>
+            </div>
+            <div>
+                Svar: <input id="svar" type="text"></input>
+            </div>
+            <div>
+                <span id="resultat" />
+            </div>
+            <div>
+                Rätt <span id="rätt"/>
+            </div>
+            <div>
+                Fel <span id="fel"/>
+            </div>
+        </div>
+    </body>
+</html>
