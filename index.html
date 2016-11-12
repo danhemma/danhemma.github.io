@@ -39,16 +39,16 @@
                     var svar = parseInt($("#svar").val());
                     if (this.tal.resultat() == svar) {
                         this.rätt += 1;
-                        $("#rätt").text(this.rätt)
                         $("#resultat").text("Rätt!");
                         window.setTimeout(function () { self.visaNyttTal(); }, 500);
                     } else  {
                         this.fel += 1;
-                        $("#fel").text(this.fel);
                         var slump = this.slump(0, 1);
                         var noobEllerLooser = slump == 1 ? "looser" : "noob";
                         $("#resultat").text("Nej, " + this.tal.text() + " blir inte " + svarText() + ", försök igen " + noobEllerLooser + "." );
                     }
+                    $("#rätt").text(this.rätt)
+                    $("#fel").text(this.fel);
                 },
                 start: function () {
                     var self = this;
